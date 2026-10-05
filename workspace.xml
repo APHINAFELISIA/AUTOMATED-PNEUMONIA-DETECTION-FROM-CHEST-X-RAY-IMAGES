@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AIDiffSettings">
+    <option name="showAIDiff" value="false" />
+  </component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="ALL" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="7df433b0-51d3-43b0-b167-f635a663eed2" name="Changes" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="EmbeddingIndexingInfo">
+    <option name="cachedIndexableFilesCount" value="5864" />
+  </component>
+  <component name="McpProjectServerCommands">
+    <commands />
+    <urls />
+  </component>
+  <component name="NextEditCompletionFeaturesState">
+    <decayedCancelled>
+      <entry key="MS100" value="1.2830341048996337" />
+      <entry key="MS500" value="3.151750339114577" />
+      <entry key="S2" value="10.560901777236495" />
+      <entry key="S5" value="23.42674355353273" />
+      <entry key="S10" value="37.442818387443644" />
+      <entry key="S30" value="61.07752372367535" />
+      <entry key="S60" value="75.90744781675174" />
+      <entry key="M2" value="89.33984939760639" />
+      <entry key="M5" value="101.7348444588101" />
+      <entry key="M10" value="107.57003984591763" />
+      <entry key="M15" value="111.9072212080739" />
+      <entry key="M30" value="127.89434424455983" />
+      <entry key="H1" value="153.5894716362136" />
+      <entry key="H2" value="178.13585453491208" />
+      <entry key="H4" value="195.32912924050297" />
+      <entry key="D1" value="213.02960834257726" />
+      <entry key="W1" value="216.42332128323343" />
+    </decayedCancelled>
+    <decayedSelected>
+      <entry key="MS100" value="0.0" />
+      <entry key="MS500" value="0.0" />
+      <entry key="S2" value="0.0" />
+      <entry key="S5" value="0.0" />
+      <entry key="S10" value="0.0" />
+      <entry key="S30" value="0.0" />
+      <entry key="S60" value="0.0" />
+      <entry key="M2" value="0.0" />
+      <entry key="M5" value="0.0" />
+      <entry key="M10" value="0.0" />
+      <entry key="M15" value="0.0" />
+      <entry key="M30" value="0.0" />
+      <entry key="H1" value="0.0" />
+      <entry key="H2" value="0.0" />
+      <entry key="H4" value="0.0" />
+      <entry key="D1" value="0.0" />
+      <entry key="W1" value="0.0" />
+    </decayedSelected>
+    <decayedShown>
+      <entry key="MS100" value="1.2156406508380688" />
+      <entry key="MS500" value="3.1109579101261953" />
+      <entry key="S2" value="10.515018505189298" />
+      <entry key="S5" value="23.350646042186725" />
+      <entry key="S10" value="37.36754071211032" />
+      <entry key="S30" value="61.0348150306299" />
+      <entry key="S60" value="75.88214980854828" />
+      <entry key="M2" value="89.32574893593197" />
+      <entry key="M5" value="101.72872756956644" />
+      <entry key="M10" value="107.56687712093613" />
+      <entry key="M15" value="111.9050649257423" />
+      <entry key="M30" value="127.8931803519058" />
+      <entry key="H1" value="153.58882098561753" />
+      <entry key="H2" value="178.13549641234826" />
+      <entry key="H4" value="195.32893869803783" />
+      <entry key="D1" value="213.02957461622557" />
+      <entry key="W1" value="216.4233164112562" />
+    </decayedShown>
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4,
+  &quot;fromUser&quot;: false
+}</component>
+  <component name="ProjectId" id="3GIXHmb2WdreEkvJhiZwIFstdy0" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;Python.config.executor&quot;: &quot;Run&quot;,
+    &quot;Python.dataset.executor&quot;: &quot;Run&quot;,
+    &quot;Python.gradcam.executor&quot;: &quot;Run&quot;,
+    &quot;Python.model.executor&quot;: &quot;Run&quot;,
+    &quot;Python.test.executor&quot;: &quot;Run&quot;,
+    &quot;Python.train.executor&quot;: &quot;Run&quot;,
+    &quot;Python.visualization.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;ml.llm.AcpAgentsConfigurable&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-python-sdk-c59985aa861c-c2ffad84badb-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-261.24374.152" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="7df433b0-51d3-43b0-b167-f635a663eed2" name="Changes" comment="" />
+      <created>1783659971374</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1783659971374</updated>
+      <workItem from="1783659972431" duration="2238000" />
+      <workItem from="1783664222917" duration="5379000" />
+      <workItem from="1783871055750" duration="154000" />
+      <workItem from="1785045136130" duration="891000" />
+      <workItem from="1786286230406" duration="13000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/Disease_Detection_CNN$train.coverage" NAME="train Coverage Results" MODIFIED="1785045157019" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pneumonia_convnext_lstm" />
+    <SUITE FILE_PATH="coverage/Disease_Detection_CNN$model.coverage" NAME="model Coverage Results" MODIFIED="1783667535042" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pneumonia_convnext_lstm" />
+  </component>
+</project>

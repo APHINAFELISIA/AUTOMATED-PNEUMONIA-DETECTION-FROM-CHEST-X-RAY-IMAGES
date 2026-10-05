@@ -1,345 +1,199 @@
-# 🫁 Explainable Hybrid CNN–RNN Framework for Pneumonia Detection
+# An Explainable Hybrid ConvNeXt–LSTM Framework for Automated Pneumonia Detection from Chest X-Ray Images Using Grad-CAM
 
-An **Explainable AI-based deep learning system** for automated pneumonia detection from chest X-ray images using a hybrid **CNN–RNN architecture** combining **ConvNeXt, BiLSTM, Attention Mechanism, and Grad-CAM**.
+Research-grade PyTorch pipeline for binary pneumonia classification on the [Kaggle Chest X-Ray Pneumonia dataset](https://www.kaggle.com/datasets/paultimothymooney/chest-xray-pneumonia) by Paul Mooney.
 
----
+## Architecture
 
-## 📌 Project Overview
-
-Pneumonia is a serious respiratory disease that can be identified through abnormalities in chest X-ray images. Manual interpretation of large numbers of X-rays can be time-consuming and requires experienced medical professionals.
-
-This project develops an automated and explainable computer-aided screening framework that classifies chest X-ray images into:
-
-- 🟢 **Normal**
-- 🔴 **Pneumonia**
-
-The system combines spatial feature extraction using **ConvNeXt**, sequential feature learning using **BiLSTM**, feature weighting using an **Attention Mechanism**, and visual explanation using **Grad-CAM**.
-
-> ⚠️ **Disclaimer:** This project is intended for research and educational purposes. It is a computer-aided screening system and does not replace professional medical diagnosis.
-
----
-
-## 🎯 Objectives
-
-- Develop an automated pneumonia detection system from chest X-ray images.
-- Use **ConvNeXt** for high-level spatial feature extraction.
-- Use **BiLSTM** for sequential feature learning from extracted feature maps.
-- Apply an **Attention Mechanism** to emphasize informative features.
-- Evaluate the model using multiple classification metrics.
-- Use **Grad-CAM** to provide visual explanations for predictions.
-
----
-
-## 🧠 Proposed Architecture
-
-```text
-Chest X-Ray Image
-        ↓
-Image Preprocessing
-        ↓
-     ConvNeXt
-   CNN Feature Extraction
-        ↓
- Feature Sequence Generation
-        ↓
-      BiLSTM
-   RNN Feature Learning
-        ↓
-     Attention
-        ↓
-    Classification
-        ↓
- Normal / Pneumonia
-        ↓
-     Grad-CAM
-        ↓
-Visual Explanation / Heatmap
+```
+Chest X-Ray [224×224]
+        │
+        ▼
+ConvNeXt-Tiny (ImageNet pretrained)  →  [768, 7, 7]
+        │
+        ▼
+Reshape to sequence [49 × 768]
+        │
+        ▼
+Stacked LSTM (2 layers, hidden=256)
+        │
+        ▼
+Linear classifier  →  NORMAL / PNEUMONIA
+        │
+        ▼
+Grad-CAM (explainability on ConvNeXt features)
 ```
 
----
+## Project Structure
 
-## 🔬 Technologies Used
-
-| Technology | Purpose |
-|---|---|
-| **Python** | Programming language |
-| **PyTorch / Deep Learning Libraries** | Model implementation |
-| **ConvNeXt** | CNN feature extraction |
-| **BiLSTM** | Sequential feature learning |
-| **Attention Mechanism** | Important feature selection |
-| **Grad-CAM** | Explainable AI |
-| **OpenCV / PIL** | Image processing |
-| **NumPy** | Numerical computation |
-| **Matplotlib** | Visualization |
-| **Scikit-learn** | Model evaluation |
-
----
-
-## 📂 Dataset
-
-The project uses the **Chest X-Ray Pneumonia Dataset**, containing X-ray images divided into:
-
-```text
-NORMAL
-PNEUMONIA
+```
+pneumonia_convnext_lstm/
+├── dataset/              train/, val/, test/  (NORMAL + PNEUMONIA subfolders)
+├── results/              evaluation plots and Grad-CAM figures
+├── saved_models/         best_model.pth
+├── config.py             hyperparameters and paths
+├── prepare_dataset.py    Kaggle data organizer + val split
+├── dataset.py            PyTorch Dataset and DataLoaders
+├── model.py              ConvNeXtLSTMClassifier
+├── train.py              training with AMP, AdamW, early stopping
+├── test.py               metrics, ROC/PR curves, confusion matrix
+├── gradcam.py            native hook-based Grad-CAM
+├── predict.py            single-image inference
+├── visualization.py      multi-panel Grad-CAM grid
+└── requirements.txt
 ```
 
-The images are separated into:
+## Quick Start
 
-```text
-Training
-Validation
-Testing
+### 1. Create and activate a virtual environment
+
+```powershell
+cd "C:\Users\admin\Desktop\SEMESTER 5\DEEPLEARNING\PROJECT\Disease_Detection_CNN"
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
 ```
 
-### Image Preprocessing
+### 2. Install dependencies
 
-The preprocessing pipeline includes:
-
-- Resizing images to **224 × 224 pixels**
-- Conversion to RGB
-- Image normalization
-- Data augmentation
-- Horizontal flipping
-- Small rotations
-- Random cropping
-- Affine transformations
-
----
-
-## ⚙️ Model Components
-
-### 1. ConvNeXt
-
-ConvNeXt is used as the CNN component of the framework.
-
-It extracts high-level spatial representations from chest X-ray images, including patterns, textures, edges, and abnormal structures.
-
-### 2. Feature Sequence Generation
-
-The feature maps generated by ConvNeXt are transformed into a sequence of feature vectors.
-
-If the feature map has dimensions:
-
-```text
-H × W × C
+```powershell
+cd pneumonia_convnext_lstm
+pip install -r requirements.txt
 ```
 
-it is reorganized into a sequence of:
+For GPU training, install the CUDA build of PyTorch if needed:
 
-```text
-L = H × W
+```powershell
+pip install torch torchvision --index-url https://download.pytorch.org/whl/cu124
 ```
 
-feature vectors with dimension `C`.
+### 3. Download the Kaggle dataset
 
-### 3. BiLSTM
+**Option A — Kaggle website**
 
-The generated feature sequence is passed to a **Bidirectional Long Short-Term Memory (BiLSTM)** network.
+1. Download from [Kaggle Chest X-Ray Pneumonia](https://www.kaggle.com/datasets/paultimothymooney/chest-xray-pneumonia).
+2. Extract the archive. You should get a `chest_xray/` folder:
 
-The BiLSTM processes the sequence in both forward and backward directions to capture relationships between feature representations.
-
-### 4. Attention Mechanism
-
-The attention layer assigns different importance weights to the BiLSTM feature representations.
-
-This allows the model to emphasize more informative features before classification.
-
-### 5. Classification
-
-The attended representation is passed through a fully connected classification layer.
-
-The model produces probabilities for:
-
-```text
-Normal
-Pneumonia
+```
+chest_xray/
+├── train/
+│   ├── NORMAL/
+│   └── PNEUMONIA/
+└── test/
+    ├── NORMAL/
+    └── PNEUMONIA/
 ```
 
-### 6. Grad-CAM
+**Option B — Kaggle CLI**
 
-**Gradient-weighted Class Activation Mapping (Grad-CAM)** is used to visualize image regions that contribute to the model's prediction.
-
-This improves the interpretability of the model by providing a heatmap along with the predicted class.
-
----
-
-## 📊 Results
-
-The final clinical test evaluation achieved:
-
-| Metric | Result |
-|---|---:|
-| Accuracy | **86.22%** |
-| Precision | **82.07%** |
-| Sensitivity / Recall | **99.74%** |
-| Specificity | **63.68%** |
-| F1-Score | **90.05%** |
-| ROC-AUC | **98.34%** |
-
-The model demonstrated particularly high sensitivity, detecting almost all pneumonia cases in the evaluated test set. However, the specificity indicates that reducing false-positive predictions remains an important area for improvement.
-
----
-
-## 📈 Confusion Matrix
-
-The reported test confusion matrix:
-
-| | Predicted Pneumonia | Predicted Normal |
-|---|---:|---:|
-| **Actual Pneumonia** | 389 | 1 |
-| **Actual Normal** | 85 | 149 |
-
-This corresponds to:
-
-- **TP:** 389
-- **TN:** 149
-- **FP:** 85
-- **FN:** 1
-
----
-
-## 🔥 Explainable AI with Grad-CAM
-
-Grad-CAM generates class-specific heatmaps showing regions of the chest X-ray that influenced the model's prediction.
-
-Example workflow:
-
-```text
-Original X-Ray
-      ↓
-Model Prediction
-      ↓
-Gradient Calculation
-      ↓
-Grad-CAM Heatmap
-      ↓
-Highlighted Important Regions
+```powershell
+pip install kaggle
+# Place kaggle.json in %USERPROFILE%\.kaggle\
+kaggle datasets download -d paultimothymooney/chest-xray-pneumonia
+Expand-Archive chest-xray-pneumonia.zip -DestinationPath .
 ```
 
-An eight-image demonstration set was also used to illustrate the Grad-CAM predictions.
+### 4. Prepare train / val / test splits
 
----
+The raw Kaggle dataset has no validation split. Use `prepare_dataset.py` to create one (15% stratified split from train):
 
-## 🏋️ Training Configuration
-
-| Parameter | Value |
-|---|---|
-| Maximum Epochs | 20 |
-| Epochs Completed | 10 |
-| Input Size | 224 × 224 |
-| Optimizer | AdamW |
-| Loss Function | Cross Entropy Loss |
-| Batch Size | 16 |
-| Early Stopping Patience | 5 |
-| Training Time | ~6 hours 49 minutes |
-
-Early stopping was used to prevent unnecessary training and potential overfitting.
-
----
-
-## 📁 Suggested Project Structure
-
-```text
-Pneumonia-Detection/
-│
-├── dataset/
-│   ├── train/
-│   ├── validation/
-│   └── test/
-│
-├── models/
-│   ├── convnext_model.py
-│   ├── bilstm.py
-│   └── attention.py
-│
-├── preprocessing/
-│   └── preprocessing.py
-│
-├── train.py
-├── evaluate.py
-├── predict.py
-├── gradcam.py
-├── requirements.txt
-├── README.md
-│
-├── results/
-│   ├── confusion_matrix.png
-│   ├── training_curve.png
-│   └── gradcam/
-│
-└── report/
-    └── project_report.pdf
+```powershell
+python prepare_dataset.py "C:\path\to\chest_xray"
 ```
 
----
+Options:
 
-## 🚀 Future Improvements
+| Flag | Description |
+|------|-------------|
+| `--val-ratio 0.15` | Validation fraction (default 15%) |
+| `--seed 42` | Reproducible split seed |
+| `--symlink` | Symlink instead of copy (saves disk space) |
+| `--no-clear` | Keep existing dataset folders |
 
-Future development can focus on:
+Expected output layout:
 
-1. Improving specificity and reducing false positives.
-2. Training with larger and more diverse multi-center datasets.
-3. Extending the system to multi-disease chest X-ray analysis.
-4. Exploring alternative hybrid architectures.
-5. Investigating improved attention mechanisms.
-6. Comparing Grad-CAM with methods such as LayerCAM and SHAP.
-7. Performing validation with expert radiologist assessments.
-8. Developing a secure web-based clinical decision-support application.
-
----
-
-## 🌍 SDG Mapping
-
-### 🏥 SDG 3 – Good Health and Well-being
-
-The project contributes to **SDG 3** by developing an AI-based system that can support automated pneumonia screening and potentially assist healthcare professionals in identifying pneumonia from chest X-rays.
-
-### 💡 SDG 9 – Industry, Innovation and Infrastructure
-
-The project contributes to **SDG 9** through the application of modern deep learning and Explainable AI technologies to medical image analysis.
-
-### ⚖️ SDG 10 – Reduced Inequalities
-
-The framework has potential to support computer-aided screening in settings where access to specialized image interpretation may be limited. Further validation would be required before practical deployment.
-
----
-
-## 👩‍💻 Author
-
-**Aphina Felisia**
-
-B.Tech Artificial Intelligence and Machine Learning  
-Albertian Institute of Science and Technology (AISAT), Kalamassery
-
----
-
-## 📚 References
-
-1. Z. Liu et al., *A ConvNet for the 2020s*, CVPR, 2022.
-2. S. Hochreiter and J. Schmidhuber, *Long Short-Term Memory*, Neural Computation, 1997.
-3. M. Schuster and K. K. Paliwal, *Bidirectional Recurrent Neural Networks*, IEEE Transactions on Signal Processing, 1997.
-4. D. Bahdanau, K. Cho, and Y. Bengio, *Neural Machine Translation by Jointly Learning to Align and Translate*, ICLR, 2015.
-5. R. R. Selvaraju et al., *Grad-CAM: Visual Explanations from Deep Networks via Gradient-Based Localization*, ICCV, 2017.
-6. D. S. Kermany et al., *Identifying Medical Diagnoses and Treatable Diseases by Image-Based Deep Learning*, Cell, 2018.
-
----
-
-## ⭐ Project Highlights
-
-```text
-✔ Hybrid CNN–RNN Architecture
-✔ ConvNeXt Feature Extraction
-✔ BiLSTM Sequential Learning
-✔ Attention Mechanism
-✔ Explainable AI using Grad-CAM
-✔ Automated Pneumonia Screening
-✔ Comprehensive Model Evaluation
-✔ Medical Image Analysis
+```
+dataset/
+├── train/   ~4,350 images
+├── val/     ~770 images
+└── test/    624 images (original Kaggle test)
 ```
 
----
+### 5. Train the model
 
-### ⚠️ Medical Disclaimer
+```powershell
+python train.py
+```
 
-This project is developed for **academic, research, and educational purposes only**. The predictions generated by the model should not be considered a medical diagnosis. Clinical decisions should always be made by qualified healthcare professionals.
+Training settings (from `config.py`):
+
+| Setting | Value |
+|---------|-------|
+| Batch size | 32 |
+| Epochs | 20 (early stopping patience 5) |
+| Learning rate | 1e-4 (AdamW + CosineAnnealingLR) |
+| AMP | Enabled on CUDA |
+| Checkpoint | `saved_models/best_model.pth` |
+
+### 6. Evaluate on the test set
+
+```powershell
+python test.py
+```
+
+Outputs in `results/`:
+
+- `evaluation_report.txt`
+- `confusion_matrix.png`
+- `roc_curve.png`
+- `precision_recall_curve.png`
+
+### 7. Single-image prediction with Grad-CAM
+
+```powershell
+python predict.py dataset/test/PNEUMONIA/person100_bacteria483.jpeg
+```
+
+Saves a side-by-side figure to `results/predictions/`.
+
+### 8. Research visualization grid
+
+```powershell
+python visualization.py
+```
+
+Saves `results/gradcam_visual_grid.png` with 4 NORMAL + 4 PNEUMONIA Grad-CAM examples.
+
+## Metrics Reported
+
+| Metric | Description |
+|--------|-------------|
+| Accuracy | Overall correct classifications |
+| Precision | TP / (TP + FP) |
+| Sensitivity | Recall / True Positive Rate |
+| Specificity | True Negative Rate |
+| F1-Score | Harmonic mean of precision and recall |
+| ROC-AUC | Area under the ROC curve |
+
+PNEUMONIA is treated as the positive class (index 1).
+
+## Hardware Notes
+
+- **CUDA GPU** — recommended; AMP enabled automatically
+- **Apple Silicon (MPS)** — supported; AMP disabled
+- **CPU** — works but training is slow; `NUM_WORKERS=0` on CPU
+
+Device is selected automatically in `config.py`.
+
+## Reproducibility
+
+Random seed `42` is used across Python, NumPy, and PyTorch. Set via `config.SEED`.
+
+## Citation
+
+If you use this project academically, cite the original dataset:
+
+> Mooney, P. (2018). *Chest X-Ray Images (Pneumonia)* [Dataset]. Kaggle.
+> https://www.kaggle.com/datasets/paultimothymooney/chest-xray-pneumonia
+
+## License
+
+This code is for educational and research purposes. The Kaggle dataset has its own license — review it on the dataset page before redistribution.
