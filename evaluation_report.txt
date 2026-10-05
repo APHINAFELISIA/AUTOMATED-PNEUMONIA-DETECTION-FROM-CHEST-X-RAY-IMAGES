@@ -1,0 +1,28 @@
+============================================================
+  ConvNeXt-LSTM Pneumonia Detection — Test Evaluation
+============================================================
+
+Checkpoint : C:\Users\admin\Desktop\SEMESTER 5\DEEPLEARNING\PROJECT\Disease_Detection_CNN\pneumonia_convnext_lstm\saved_models\best_model.pth
+Test split : C:\Users\admin\Desktop\SEMESTER 5\DEEPLEARNING\PROJECT\Disease_Detection_CNN\pneumonia_convnext_lstm\dataset\test
+Samples    : 624
+Positive   : PNEUMONIA (class index 1)
+
+------------------------------------------------------------
+  Classification Metrics
+------------------------------------------------------------
+  Accuracy     : 0.8622  (86.22%)
+  Precision    : 0.8207
+  Sensitivity  : 0.9974  (Recall / TPR)
+  Specificity  : 0.6368  (TNR)
+  F1-Score     : 0.9005
+  ROC-AUC      : 0.9834
+
+------------------------------------------------------------
+  Confusion Matrix Counts
+------------------------------------------------------------
+  True Positives  (TP) : 389
+  True Negatives  (TN) : 149
+  False Positives (FP) : 85
+  False Negatives (FN) : 1
+
+============================================================
